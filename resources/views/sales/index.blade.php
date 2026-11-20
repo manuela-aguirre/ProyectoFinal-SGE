@@ -14,6 +14,9 @@ venta</a>
  <strong>Total del mes:</strong>
  ${{ number_format((float) $totalMonth, 2) }}
  </div>
+ @can('exportar-ventas')
+ <a href="{{ route('sales.export', request()->only('from', 'to')) }}" class="text-blue-700 underline">Exportar a Excel</a>
+ @endcan
  </div>
  <form method="GET" action="{{ route('sales.index') }}" class="flex flex-wrap gap-2">
  <input type="text" name="search" value="{{ request('search') }}" placeholder="Buscar

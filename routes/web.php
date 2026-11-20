@@ -4,6 +4,7 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,12 @@ Route::middleware('auth')->group(function () {
  // Rol activo (usuarios con varios roles)
  Route::get('rol-activo', [ActiveRoleController::class, 'edit'])->name('active-role.edit');
  Route::put('rol-activo', [ActiveRoleController::class, 'update'])->name('active-role.update');
+ // Excel: exportar e importar (Clase 13). Se declaran ANTES de Route::resource
+ Route::get('products/exportar', [ExcelController::class, 'exportProducts'])->name('products.export');
+ Route::get('products/importar', [ExcelController::class, 'importForm'])->name('products.import');
+ Route::post('products/importar', [ExcelController::class, 'import'])->name('products.import.store');
+ Route::get('products/plantilla', [ExcelController::class, 'template'])->name('products.template');
+ Route::get('sales/exportar', [ExcelController::class, 'exportSales'])->name('sales.export');
  // Productos
  Route::patch('products/{product}/restore', [ProductController::class, 'restore'])
  ->withTrashed()->name('products.restore');
@@ -42,23 +49,23 @@ Route::middleware('auth')->group(function () {
  Route::get('sales/{sale}/pdf', [SaleController::class, 'pdf'])->name('sales.pdf');
  Route::resource('sales', SaleController::class)->only(['index', 'create', 'store', 'show',
 'destroy']);
- // Proveedores (Clase anterior)
+// Proveedores (Clase 10)
  Route::patch('providers/{provider}/restore', [ProviderController::class, 'restore'])
  ->withTrashed()->name('providers.restore');
  Route::resource('providers', ProviderController::class)->except('show');
- // Compras (Clase anterior)
+ // Compras (Clase 10)
  Route::patch('purchases/{purchase}/receive', [PurchaseController::class, 'receive'])->name('purchases.receive');
  Route::get('purchases/{purchase}/pdf', [PurchaseController::class, 'pdf'])->name('purchases.pdf');
  Route::resource('purchases', PurchaseController::class)->only(['index', 'create', 'store', 'show',
 'destroy']);
  // Inventario: kardex y ajustes (Clase 12)
  Route::get('inventario/kardex', [InventoryController::class, 'kardex'])->name('inventory.kardex');
-Route::get('inventario/kardex/{product}/pdf', [InventoryController::class, 'pdf'])->withTrashed()->name('inventory.pdf');
+ Route::get('inventario/kardex/{product}/pdf', [InventoryController::class, 'pdf'])->withTrashed()->name('inventory.pdf');
  Route::get('inventario/ajustes/{product}', [InventoryController::class, 'adjust'])->name('inventory.adjust');
  Route::post('inventario/ajustes/{product}', [InventoryController::class, 'storeAdjustment'])->name('inventory.adjust.store');
  // Auditoría (Clase 12)
  Route::get('auditoria', [AuditController::class, 'index'])->name('audit.index');
- // Configuración: usuarios, roles y permisos (guía adicional de la Clase anterior)
+ // Configuración: usuarios, roles y permisos (guía adicional de la Clase 10)
  Route::prefix('configuracion')->name('settings.')->group(function () {
  Route::get('/', SettingsController::class)->name('index');
  Route::patch('usuarios/{user}/estado', [UserController::class, 'toggle'])->name('users.toggle');

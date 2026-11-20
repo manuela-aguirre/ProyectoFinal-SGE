@@ -17,11 +17,13 @@ class RolePermissionSeeder extends Seeder
  app(PermissionRegistrar::class)->forgetCachedPermissions();
  $permissions = [
  'ver-productos', 'crear-productos', 'editar-productos', 'eliminar-productos',
+ 'exportar-productos', 'importar-productos',
  'ver-categorias', 'crear-categorias', 'editar-categorias', 'eliminar-categorias',
  // Clientes
  'ver-clientes', 'crear-clientes', 'editar-clientes', 'eliminar-clientes',
  // Ventas
  'ver-ventas', 'crear-ventas', 'editar-ventas', 'eliminar-ventas',
+ 'exportar-ventas',
  // Proveedores (Clase anterior)
  'ver-proveedores', 'crear-proveedores', 'editar-proveedores', 'eliminar-proveedores',
  // Compras (Clase anterior: se agrega recibir-compras)

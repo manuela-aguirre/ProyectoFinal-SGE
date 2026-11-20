@@ -33,6 +33,7 @@ return [
  'recibir' => 'Recibir',
  'ajustar' => 'Ajustar',
  'exportar' => 'Exportar',
+ 'importar' => 'Importar',
  'aprobar' => 'Aprobar',
  ],
  // Rol que siempre tiene TODOS los permisos (no se puede editar ni eliminar)

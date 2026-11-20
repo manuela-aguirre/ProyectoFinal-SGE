@@ -38,6 +38,16 @@
 						<i class="fa-solid fa-plus"></i> Nuevo producto
 					</a>
 				@endcan
+				@can('exportar-productos')
+					<a href="{{ route('products.export', request()->only('search')) }}" class="text-sm font-semibold text-[#14532d] underline">
+						Exportar a Excel
+					</a>
+				@endcan
+				@can('importar-productos')
+					<a href="{{ route('products.import') }}" class="text-sm font-semibold text-[#14532d] underline">
+						Importar desde Excel
+					</a>
+				@endcan
 				@can('eliminar-productos')
 					@if ($showTrashed)
 						<a href="{{ route('products.index') }}" class="text-sm font-semibold text-[#14532d] underline">Ver productos</a>
