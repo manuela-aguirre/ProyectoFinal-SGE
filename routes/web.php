@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
@@ -24,6 +25,10 @@ Route::middleware('auth')->group(function () {
  Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
  Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
  Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+ // Notificaciones del usuario (Clase 14)
+ Route::get('notificaciones', [NotificationController::class, 'index'])->name('notifications.index');
+ Route::patch('notificaciones/{id}', [NotificationController::class, 'read'])->name('notifications.read');
+ Route::post('notificaciones/leer-todas', [NotificationController::class, 'readAll'])->name('notifications.read-all');
  // Rol activo (usuarios con varios roles)
  Route::get('rol-activo', [ActiveRoleController::class, 'edit'])->name('active-role.edit');
  Route::put('rol-activo', [ActiveRoleController::class, 'update'])->name('active-role.update');
@@ -49,7 +54,7 @@ Route::middleware('auth')->group(function () {
  Route::get('sales/{sale}/pdf', [SaleController::class, 'pdf'])->name('sales.pdf');
  Route::resource('sales', SaleController::class)->only(['index', 'create', 'store', 'show',
 'destroy']);
-// Proveedores (Clase 10)
+ // Proveedores (Clase 10)
  Route::patch('providers/{provider}/restore', [ProviderController::class, 'restore'])
  ->withTrashed()->name('providers.restore');
  Route::resource('providers', ProviderController::class)->except('show');

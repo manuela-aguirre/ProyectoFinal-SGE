@@ -1,5 +1,6 @@
 <?php
 namespace App\Services;
+use App\Events\SaleRegistered;
 use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,8 @@ class SaleService
  /**
  * Registra una venta completa dentro de una transacción.
  *
- * @param array $data ['client_id' => int, 'sale_date' => 'Y-m-d', 'notes' => string, 'items' => [['product_id' => int, 'quantity' => int], ...]]
+ * @param array $data ['client_id' => int, 'sale_date' => 'Y-m-d', 'notes' => string, 'items' =>
+[['product_id' => int, 'quantity' => int], ...]]
  */
  public function register(array $data, int $userId): Sale
  {
@@ -58,15 +60,18 @@ $item['quantity'];
  ]);
  // 3. Crear los detalles y descontar stock
  foreach ($items as $item) {
-    $sale->details()->create([
+ $sale->details()->create([
  'product_id' => $item['product']->id,
  'quantity' => $item['quantity'],
  'unit_price' => $item['unit_price'],
  'subtotal' => $item['subtotal'],
  ]);
  // Descuento de stock + movimiento en el kardex (Clase 12)
- $this->inventory->exit($item['product'], $item['quantity'], 'venta', $sale, (float) $item['unit_price']);
- }
+ $this->inventory->exit($item['product'], $item['quantity'], 'venta', $sale, (float)
+$item['unit_price']);
+}
+ // Clase 14: avisar que hubo una venta (los listeners deciden qué hacer)
+ SaleRegistered::dispatch($sale);
  return $sale;
  });
  }

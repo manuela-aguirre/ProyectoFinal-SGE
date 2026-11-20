@@ -68,6 +68,16 @@
 
         @auth
             <div class="flex items-center gap-3">
+                {{-- Campana de notificaciones (Clase 14) --}}
+                @php($unread = Auth::user()->unreadNotifications()->count())
+                <a href="{{ route('notifications.index') }}" class="relative inline-flex h-9 w-9 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 hover:text-[#14532d]" aria-label="Notificaciones">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9a6 6 0 0 0-12 0v.75a8.967 8.967 0 0 1-2.311 6.022 23.848 23.848 0 0 0 5.454 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                    </svg>
+                    @if ($unread > 0)
+                        <span class="absolute -right-2 -top-1 rounded-full bg-red-600 px-1.5 text-xs font-bold text-white">{{ $unread }}</span>
+                    @endif
+                </a>
                 <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#dcfce7] text-[11px] font-bold text-[#14532d]">
                     {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
                 </div>
@@ -87,6 +97,11 @@
         @endauth
 
         <div class="w-full border-t border-slate-100 pt-2 sm:hidden">
+            @auth
+                <x-responsive-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
+                    Notificaciones ({{ Auth::user()->unreadNotifications()->count() }})
+                </x-responsive-nav-link>
+            @endauth
             @can('ver-categorias')
                 <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                     Categorías
