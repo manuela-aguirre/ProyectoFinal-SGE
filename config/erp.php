@@ -1,4 +1,5 @@
 <?php
+
 /*
 | Parámetros de negocio del ERP (Clase 14). Se leen con config('erp.clave').
 | Tenerlos aquí evita «números mágicos» repartidos por el código.

@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | Catálogo de permisos del ERP
@@ -10,32 +11,32 @@
 */
 return [
     // Módulos (categorías de permisos) en el orden en que aparecen en la matriz
- 'modules' => [
- 'productos' => 'Productos',
- 'categorias' => 'Categorías',
- 'clientes' => 'Clientes',
- 'ventas' => 'Ventas',
- 'proveedores' => 'Proveedores',
- 'compras' => 'Compras',
- 'inventario' => 'Inventario (kardex)',
- 'reportes' => 'Reportes',
- 'auditoria' => 'Auditoría',
- 'usuarios' => 'Usuarios',
- 'roles' => 'Roles',
- 'permisos' => 'Permisos',
- ],
- // Acciones (columnas de la matriz)
- 'actions' => [
- 'ver' => 'Ver',
- 'crear' => 'Crear',
- 'editar' => 'Editar',
- 'eliminar' => 'Eliminar',
- 'recibir' => 'Recibir',
- 'ajustar' => 'Ajustar',
- 'exportar' => 'Exportar',
- 'importar' => 'Importar',
- 'aprobar' => 'Aprobar',
- ],
- // Rol que siempre tiene TODOS los permisos (no se puede editar ni eliminar)
- 'super_role' => 'admin',
+    'modules' => [
+        'productos' => 'Productos',
+        'categorias' => 'Categorías',
+        'clientes' => 'Clientes',
+        'ventas' => 'Ventas',
+        'proveedores' => 'Proveedores',
+        'compras' => 'Compras',
+        'inventario' => 'Inventario (kardex)',
+        'reportes' => 'Reportes',
+        'auditoria' => 'Auditoría',
+        'usuarios' => 'Usuarios',
+        'roles' => 'Roles',
+        'permisos' => 'Permisos',
+    ],
+    // Acciones (columnas de la matriz)
+    'actions' => [
+        'ver' => 'Ver',
+        'crear' => 'Crear',
+        'editar' => 'Editar',
+        'eliminar' => 'Eliminar',
+        'recibir' => 'Recibir',
+        'ajustar' => 'Ajustar',
+        'exportar' => 'Exportar',
+        'importar' => 'Importar',
+        'aprobar' => 'Aprobar',
+    ],
+    // Rol que siempre tiene TODOS los permisos (no se puede editar ni eliminar)
+    'super_role' => 'admin',
 ];

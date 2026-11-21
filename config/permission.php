@@ -119,8 +119,7 @@ return [
      */
 
     // false: el ERP registra su propio verificador en AppServiceProvider (rol activo + permisos directos)
- 'register_permission_check_method' => false,
-
+    'register_permission_check_method' => false,
 
     /*
      * When set to true, Laravel\Octane\Events\OperationTerminated event listener will be registered

@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-       Schema::create('categorias', function (Blueprint $table) {
-    $table->id();
-    $table->string('codigo', 20)->nullable();   // <- agregar
-    $table->string('nombre', 50);
-    $table->timestamps();
-});
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->id();
+            $table->string('codigo', 20)->nullable();   // <- agregar
+            $table->string('nombre', 50);
+            $table->timestamps();
+        });
     }
 
     public function down(): void
@@ -21,4 +21,3 @@ return new class extends Migration
         Schema::dropIfExists('categorias');
     }
 };
-
