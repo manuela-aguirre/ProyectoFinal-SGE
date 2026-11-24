@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Provider;
 use App\Services\InventoryService;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
@@ -52,19 +53,20 @@ class ProductsImport implements SkipsOnFailure, ToCollection, WithHeadingRow, Wi
 
                 continue;
             }
-            $product = Product::create([
-                'nombre' => trim((string) $row['nombre']),
-                'descripcion' => $row['descripcion'] ?? null,
-                'precio' => $row['precio'],
-                'stock' => (int) ($row['stock'] ?? 0),
-                'proveedor_id' => $provider->id,
-                'categoria_id' => $category->id,
-            ]);
-            $product->update([
-                'codigo' => sprintf('PROD-%06d', $product->id),
-            ]);
-            // El stock del archivo entra al kardex como «inventario inicial»
-            $this->inventory->opening($product);
+            $initialStock = (int) ($row['stock'] ?? 0);
+            DB::transaction(function () use ($row, $category, $provider, $initialStock) {
+                $product = Product::create([
+                    'nombre' => trim((string) $row['nombre']),
+                    'descripcion' => $row['descripcion'] ?? null,
+                    'precio' => $row['precio'],
+                    'proveedor_id' => $provider->id,
+                    'categoria_id' => $category->id,
+                ]);
+                $product->update([
+                    'codigo' => sprintf('PROD-%06d', $product->id),
+                ]);
+                $this->inventory->opening($product, $initialStock);
+            });
             $this->created++;
         }
     }

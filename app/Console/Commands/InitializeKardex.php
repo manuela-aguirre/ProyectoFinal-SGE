@@ -18,7 +18,7 @@ productos que aún no tienen movimientos';
         $count = 0;
         Product::withTrashed()->whereDoesntHave('movements')->where('stock', '>', 0)
             ->each(function (Product $product) use ($inventory, &$count) {
-                if ($inventory->opening($product)) {
+                if ($inventory->recordOpeningBalance($product)) {
                     $count++;
                 }
             });

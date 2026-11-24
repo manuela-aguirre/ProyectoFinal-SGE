@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ProductController extends Controller implements HasMiddleware
@@ -70,9 +71,14 @@ class ProductController extends Controller implements HasMiddleware
 
     public function store(StoreProductRequest $request, InventoryService $inventory): RedirectResponse
     {
-        $product = Product::create($request->validated());
-        // Clase 12: el stock con el que se crea queda como «inventario inicial» en el kardex
-        $inventory->opening($product);
+        $data = $request->validated();
+        $initialStock = $data['stock'];
+        unset($data['stock']);
+
+        DB::transaction(function () use ($data, $initialStock, $inventory) {
+            $product = Product::create($data);
+            $inventory->opening($product, $initialStock);
+        });
 
         return redirect()->route('products.index')
             ->with('success', 'Producto creado exitosamente.');

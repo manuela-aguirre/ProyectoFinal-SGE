@@ -23,12 +23,19 @@ class ProductSeeder extends Seeder
             ['codigo' => 'PRD-0005', 'nombre' => 'Diadema HyperX', 'precio' => 320000, 'stock' => 8, 'categoria_id' => $accesorios->id],
         ];
         foreach ($products as $product) {
+            $initialStock = $product['stock'];
+            $attributes = $product + ['proveedor_id' => $providerId];
+            unset($attributes['stock']);
+
             $model = Product::firstOrCreate(
                 ['codigo' => $product['codigo']],
-                $product + ['proveedor_id' => $providerId],
+                $attributes,
             );
-            // Clase 12: saldo inicial en el kardex (si el producto aún no tiene movimientos)
-            $inventory->opening($model);
+            if ($model->wasRecentlyCreated) {
+                $inventory->opening($model, $initialStock);
+            } else {
+                $inventory->recordOpeningBalance($model);
+            }
         }
     }
 }

@@ -54,23 +54,51 @@ null,
     }
 
     /**
-     * Registra el stock existente como «inventario inicial» (productos nuevos o anteriores al kardex).
+     * Registra el stock inicial de un producto nuevo mediante un movimiento de entrada.
      */
-    public function opening(Product $product): ?InventoryMovement
+    public function opening(Product $product, int $quantity): ?InventoryMovement
     {
-        if ($product->stock <= 0 || $product->movements()->exists()) {
+        if ($quantity <= 0) {
             return null;
         }
 
-        return InventoryMovement::create([
-            'product_id' => $product->id,
-            'type' => 'entrada',
-            'concept' => 'inventario_inicial',
-            'quantity' => $product->stock,
-            'balance' => $product->stock,
-            'user_id' => auth()->id(),
-            'notes' => 'Saldo inicial del producto',
-        ]);
+        return DB::transaction(function () use ($product, $quantity) {
+            $product = Product::withTrashed()->lockForUpdate()->findOrFail($product->id);
+            if ($product->movements()->exists()) {
+                return null;
+            }
+            if ($product->stock !== 0) {
+                throw ValidationException::withMessages([
+                    'stock' => 'El inventario inicial solo puede registrarse cuando el producto tiene stock cero.',
+                ]);
+            }
+
+            return $this->move($product, 'entrada', $quantity, 'inventario_inicial', null, null,
+                'Saldo inicial del producto');
+        });
+    }
+
+    /**
+     * Registra en el kardex un saldo existente sin modificarlo.
+     */
+    public function recordOpeningBalance(Product $product): ?InventoryMovement
+    {
+        return DB::transaction(function () use ($product) {
+            $product = Product::withTrashed()->lockForUpdate()->findOrFail($product->id);
+            if ($product->stock <= 0 || $product->movements()->exists()) {
+                return null;
+            }
+
+            return InventoryMovement::create([
+                'product_id' => $product->id,
+                'type' => 'entrada',
+                'concept' => 'inventario_inicial',
+                'quantity' => $product->stock,
+                'balance' => $product->stock,
+                'user_id' => auth()->id(),
+                'notes' => 'Saldo inicial del producto',
+            ]);
+        });
     }
 
     private function move(Product $product, string $type, int $quantity, string $concept, ?Model $reference,

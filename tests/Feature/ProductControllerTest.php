@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Provider;
 use App\Models\User;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -81,6 +82,35 @@ class ProductControllerTest extends TestCase
             ->assertOk()
             ->assertSee('Producto en papelera')
             ->assertDontSee('Producto activo');
+    }
+
+    public function test_store_records_initial_stock_as_an_inventory_movement(): void
+    {
+        $user = $this->adminUser();
+        $category = Category::create(['nombre' => 'Categoría de inventario']);
+        $provider = Provider::factory()->create();
+
+        $this->actingAs($user)
+            ->post(route('products.store'), [
+                'nombre' => 'Producto con saldo inicial',
+                'descripcion' => 'Registro de inventario inicial',
+                'stock' => 4,
+                'precio' => 100,
+                'proveedor_id' => $provider->id,
+                'categoria_id' => $category->id,
+            ])
+            ->assertRedirect(route('products.index'));
+
+        $product = Product::where('nombre', 'Producto con saldo inicial')->firstOrFail();
+
+        $this->assertSame(4, $product->stock);
+        $this->assertDatabaseHas('inventory_movements', [
+            'product_id' => $product->id,
+            'type' => 'entrada',
+            'concept' => 'inventario_inicial',
+            'quantity' => 4,
+            'balance' => 4,
+        ]);
     }
 
     public function test_product_can_be_deleted_and_restored_with_success_messages(): void

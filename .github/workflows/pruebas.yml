@@ -52,8 +52,4 @@ jobs:
           DB_DATABASE: testing
           DB_USERNAME: root
           DB_PASSWORD: password
-<<<<<<< HEAD
         run: php artisan test
-=======
-        run: php artisan test
->>>>>>> 009eeca7a3ffe50d4074aefe8ffd56ba99f471a6
