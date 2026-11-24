@@ -22,50 +22,63 @@ class DashboardController extends Controller
                 'description' => $user->can('crear-productos') ? 'Administra el inventario.' : 'Consulta el
 inventario.',
                 'route' => 'products.index',
-                'permission' => 'ver-productos',
+                'permissions' => ['ver-productos'],
             ],
             [
                 'title' => 'Categorías',
                 'description' => $user->can('crear-categorias') ? 'Organiza los productos.' : 'Consulta
 las categorías.',
                 'route' => 'categories.index',
-                'permission' => 'ver-categorias',
+                'permissions' => ['ver-categorias'],
             ],
             [
                 'title' => 'Clientes',
                 'description' => $user->can('crear-clientes') ? 'Administra los clientes.' : 'Consulta los
 clientes.',
                 'route' => 'clients.index',
-                'permission' => 'ver-clientes',
+                'permissions' => ['ver-clientes'],
             ],
             [
                 'title' => 'Ventas',
                 'description' => $user->can('crear-ventas') ? 'Registra y consulta ventas.' : 'Consulta las
 ventas.',
                 'route' => 'sales.index',
-                'permission' => 'ver-ventas',
+                'permissions' => ['ver-ventas'],
             ],
             [
                 'title' => 'Proveedores',
                 'description' => $user->can('crear-proveedores') ? 'Administra los proveedores.' :
 'Consulta los proveedores.',
                 'route' => 'providers.index',
-                'permission' => 'ver-proveedores',
+                'permissions' => ['ver-proveedores'],
             ],
             [
                 'title' => 'Compras',
                 'description' => $user->can('crear-compras') ? 'Registra órdenes y recibe mercancía.' :
 'Consulta las compras.',
                 'route' => 'purchases.index',
-                'permission' => 'ver-compras',
+                'permissions' => ['ver-compras'],
+            ],
+            [
+                'title' => 'Inventario',
+                'description' => 'Consulta movimientos y existencias del kardex.',
+                'route' => 'inventory.kardex',
+                'permissions' => ['ver-inventario'],
+            ],
+            [
+                'title' => 'Auditoría',
+                'description' => 'Consulta la bitácora de actividad del sistema.',
+                'route' => 'audit.index',
+                'permissions' => ['ver-auditoria'],
             ],
             [
                 'title' => 'Configuración',
                 'description' => 'Usuarios, roles y permisos.',
                 'route' => 'settings.index',
-                'permission' => 'ver-usuarios',
+                'permissions' => ['ver-usuarios', 'ver-roles', 'ver-permisos'],
             ],
-        ])->filter(fn ($m) => $user->can($m['permission']))->values();
+        ])->filter(fn ($module) => collect($module['permissions'])
+            ->contains(fn (string $permission) => $user->can($permission)))->values();
         $stats = collect();
         if ($user->can('ver-productos')) {
             $stats->push(['label' => 'Productos activos', 'value' => Product::count()]);

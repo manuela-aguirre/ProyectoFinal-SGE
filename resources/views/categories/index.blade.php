@@ -5,8 +5,6 @@
 		</h2>
 	</x-slot>
 
-	@include('partials.crud-styles')
-
 	<div class="cotec-panel crud-wrap">
 		@if (session('success'))
 			<div class="status-banner">{{ session('success') }}</div>

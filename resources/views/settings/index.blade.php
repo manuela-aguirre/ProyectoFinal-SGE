@@ -29,7 +29,7 @@ hover:shadow-lg transition">
  </a>
  @endcan
  @can('ver-permisos')
- <a href="{{ route('settings.permissions.index') }}" class="bg-white shadow rounded p6 hover:shadow-lg transition">
+ <a href="{{ route('settings.permissions.index') }}" class="bg-white shadow rounded p-6 hover:shadow-lg transition">
  <h3 class="font-semibold text-lg text-blue-700">Matriz de permisos</h3>
  <p class="text-3xl font-bold mt-2">{{ $permissionsCount }}</p>
  <p class="text-sm text-gray-600 mt-1">Permisos por rol, módulo y usuario.</p>

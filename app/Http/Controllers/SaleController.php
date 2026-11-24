@@ -6,13 +6,11 @@ use App\Http\Requests\StoreSaleRequest;
 use App\Models\Client;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Services\InventoryService;
 use App\Services\SaleService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class SaleController extends Controller implements HasMiddleware
@@ -81,19 +79,9 @@ class SaleController extends Controller implements HasMiddleware
         return view('sales.show', ['sale' => $sale]);
     }
 
-    public function destroy(Sale $sale, InventoryService $inventory)
+    public function destroy(Sale $sale, SaleService $sales)
     {
-        // Regla de negocio: al anular, se devuelve el stock a los productos (con movimiento en el kardex)
-        DB::transaction(function () use ($sale, $inventory) {
-            foreach ($sale->details as $detail) {
-                if ($detail->product) {
-                    $inventory->entry($detail->product, $detail->quantity, 'anulacion_venta', $sale,
-                        (float) $detail->unit_price);
-                }
-            }
-            $sale->update(['status' => 'anulada']);
-            $sale->delete();
-        });
+        $sales->cancel($sale);
 
         return redirect()->route('sales.index')
             ->with('success', "Venta «{$sale->invoice_number}» anulada y stock devuelto.");

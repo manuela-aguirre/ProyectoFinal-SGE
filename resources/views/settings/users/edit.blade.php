@@ -13,7 +13,7 @@ shadow rounded p-6 space-y-4">
  <div class="flex items-center gap-4 pt-4 border-t">
  <x-primary-button>Actualizar</x-primary-button>
  <a href="{{ route('settings.users.index') }}" class="underline">Cancelar</a>
- <a href="{{ route('settings.permissions.index', ['user' => $user->id]) }}" class="textgray-700 underline">Ver permisos efectivos</a>
+ <a href="{{ route('settings.permissions.index', ['user' => $user->id]) }}" class="text-gray-700 underline">Ver permisos efectivos</a>
  </div>
  </form>
  </div>

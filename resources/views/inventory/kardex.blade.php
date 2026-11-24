@@ -35,7 +35,7 @@ border-gray-300 rounded-md">
  </div>
  <div>
  <x-input-label for="to" value="Hasta" />
- <input id="to" type="date" name="to" value="{{ request('to') }}" class="mt-1 bordergray-300 rounded-md">
+ <input id="to" type="date" name="to" value="{{ request('to') }}" class="mt-1 border-gray-300 rounded-md">
  </div>
  <x-primary-button>Consultar</x-primary-button>
  </form>
@@ -67,6 +67,7 @@ underline">Ajustar inventario</a>
  @endcan
  </div>
  </div>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
@@ -102,6 +103,7 @@ $m->unit_cost, 2) : '' }}</td>
  @endforelse
  </tbody>
  </table>
+ </div>
  {{ $movements->links() }}
  @else
  <p class="text-sm text-gray-500">Seleccione un producto para ver su historial de entradas y salidas.</p>

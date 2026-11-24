@@ -30,7 +30,7 @@ underline">
  @endif
  @endcan
  </div>
- <form method="GET" action="{{ route('providers.index') }}" class="flex flex-wrap gap2">
+ <form method="GET" action="{{ route('providers.index') }}" class="flex flex-wrap gap-2">
  @if ($showTrashed)
  <input type="hidden" name="trashed" value="1">
  @endif
@@ -44,6 +44,7 @@ por razón social, NIT o contacto..." class="border-gray-300 rounded-md">
  </select>
  <x-primary-button>Filtrar</x-primary-button>
  </form>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
@@ -98,6 +99,7 @@ para mostrar.</td>
  @endforelse
  </tbody>
  </table>
+ </div>
  {{ $providers->links() }}
  </div>
  </div>

@@ -13,7 +13,7 @@ $value)>{{ $label }}</option>
  </div>
  <div>
  <x-input-label for="document_number" value="Número de documento" />
- <x-text-input id="document_number" name="document_number" type="text" class="mt-1 block wfull"
+ <x-text-input id="document_number" name="document_number" type="text" class="mt-1 block w-full"
  :value="old('document_number', $client->document_number)" required />
  <x-input-error class="mt-2" :messages="$errors->get('document_number')" />
  </div>

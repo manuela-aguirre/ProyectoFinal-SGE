@@ -19,6 +19,7 @@
  <p class="text-sm">Vendedor: {{ $sale->user?->name }}</p>
  </div>
  </div>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm border-t">
  <thead>
  <tr class="border-b text-left">
@@ -41,6 +42,7 @@
  @endforeach
  </tbody>
  </table>
+ </div>
  <div class="flex justify-end">
  <div class="text-right space-y-1">
  <p>Subtotal: ${{ number_format((float) $sale->subtotal, 2) }}</p>

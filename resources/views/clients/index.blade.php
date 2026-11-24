@@ -39,6 +39,7 @@ por nombre, doc o email..." class="border-gray-300 rounded-md">
 </select>
  <x-primary-button>Filtrar</x-primary-button>
  </form>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
@@ -94,6 +95,7 @@ mostrar.</td>
  @endforelse
  </tbody>
  </table>
+ </div>
  {{ $clients->links() }}
  </div>
  </div>

@@ -12,6 +12,7 @@
 rol</a>
  @endcan
  </div>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
@@ -55,6 +56,7 @@ underline">Eliminar</button>
  @endforeach
  </tbody>
  </table>
+ </div>
  </div>
  </div>
  </div>

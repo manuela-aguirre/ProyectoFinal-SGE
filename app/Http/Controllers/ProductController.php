@@ -34,19 +34,19 @@ class ProductController extends Controller implements HasMiddleware
 
     public function index(Request $request): View
     {
-        $showTrashed = $request->boolean('trashed') && $request->user()->can('eliminarproductos');
+        $showTrashed = $request->boolean('trashed') && $request->user()->can('eliminar-productos');
         $products = Product::query()
             ->with(['category', 'proveedor'])
             ->when($showTrashed, fn ($query) => $query->onlyTrashed())
             ->when($request->filled('search'), function ($query) use ($request) {
                 $query->where(function ($query) use ($request) {
-                    $query->where('name', 'like', '%'.$request->string('search').'%')
-                        ->orWhere('description', 'like', '%'.$request->string('search').'%');
+                    $search = '%'.$request->string('search').'%';
+                    $query->where('nombre', 'like', $search)
+                        ->orWhere('descripcion', 'like', $search);
                 });
             })
-            ->when($request->filled('category'), fn ($query) => $query->where('category_id',
+            ->when($request->filled('category'), fn ($query) => $query->where('categoria_id',
                 $request->integer('category')))
-            ->when($request->filled('status'), fn ($query) => $query->where('active', $request->input('status') === 'active'))
             ->latest($showTrashed ? 'deleted_at' : 'created_at')
             ->paginate(10)
             ->withQueryString();
@@ -62,7 +62,7 @@ class ProductController extends Controller implements HasMiddleware
     public function create(): View
     {
         return view('products.create', [
-            'product' => new Product(['active' => true, 'stock' => 0]),
+            'product' => new Product(['stock' => 0]),
             'categories' => $this->selectableCategories(),
             'proveedores' => Provider::where('active', true)->orderBy('name')->get(['id', 'name']),
         ]);
@@ -100,18 +100,18 @@ class ProductController extends Controller implements HasMiddleware
         $product->delete();
 
         return redirect()->route('products.index')
-            ->with('success', "Producto «{$product->name}» enviado a la papelera.");
+            ->with('success', "Producto «{$product->nombre}» enviado a la papelera.");
     }
 
     public function restore(Product $product): RedirectResponse
     {
         if ($product->category?->trashed()) {
-            return back()->with('error', "Restaura primero la categoría «{$product->category->name}».");
+            return back()->with('error', "Restaura primero la categoría «{$product->category->nombre}».");
         }
         $product->restore();
 
         return redirect()->route('products.index', ['trashed' => 1])
-            ->with('success', "Producto «{$product->name}» restaurado.");
+            ->with('success', "Producto «{$product->nombre}» restaurado.");
     }
 
     /**

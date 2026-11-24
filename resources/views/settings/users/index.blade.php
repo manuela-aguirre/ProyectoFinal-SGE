@@ -31,6 +31,7 @@ por nombre o correo..." class="border-gray-300 rounded-md">
  </select>
  <x-primary-button>Filtrar</x-primary-button>
  </form>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
@@ -49,7 +50,7 @@ por nombre o correo..." class="border-gray-300 rounded-md">
  <td class="p-2">{{ $user->email }}</td>
  <td class="p-2">
  @forelse ($user->roles as $role)
- <span class="inline-block rounded-full bg-blue-50 px-2 py-0.5 text-xs textblue-800">{{ $role->name }}</span>
+ <span class="inline-block rounded-full bg-blue-50 px-2 py-0.5 text-xs text-blue-800">{{ $role->name }}</span>
  @empty
  <span class="text-xs text-gray-400">sin rol</span>
  @endforelse
@@ -84,6 +85,7 @@ mostrar.</td>
  @endforelse
  </tbody>
  </table>
+ </div>
  {{ $users->links() }}
  </div>
  </div>

@@ -11,7 +11,7 @@ permisos</h2>
  <div class="bg-white shadow rounded p-6 space-y-4">
  <a href="{{ route('settings.index') }}" class="underline">← Configuración</a>
  {{-- Filtros --}}
- <form method="GET" action="{{ route('settings.permissions.index') }}" class="flex flexwrap items-end gap-2">
+ <form method="GET" action="{{ route('settings.permissions.index') }}" class="flex flex-wrap items-end gap-2">
  <div>
  <x-input-label for="module" value="Módulo (categoría)" />
  <select id="module" name="module" class="mt-1 border-gray-300 rounded-md">

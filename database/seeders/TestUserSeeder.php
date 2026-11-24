@@ -15,9 +15,8 @@ class TestUserSeeder extends Seeder
         $users = [
             ['name' => 'Administrador', 'email' => 'admin@test.com', 'roles' => ['admin'], 'direct' => []],
             ['name' => 'Vendedor', 'email' => 'vendedor@test.com', 'roles' => ['vendedor'], 'direct' => []],
-            ['name' => 'Almacenista', 'email' => 'almacenista@test.com', 'roles' => ['almacenista'],
-                'direct' => []],
-            // Guía adicional: usuario con DOS roles y un permiso DIRECTO (no viene de ningún rol)
+            ['name' => 'Almacenista', 'email' => 'almacenista@test.com', 'roles' => ['almacenista'], 'direct' => []],
+            ['name' => 'Contador', 'email' => 'contador@test.com', 'roles' => ['contador'], 'direct' => []],
             ['name' => 'Supervisor', 'email' => 'supervisor@test.com', 'roles' => ['vendedor',
                 'almacenista'], 'direct' => ['ver-reportes']],
         ];

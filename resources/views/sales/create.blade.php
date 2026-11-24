@@ -31,13 +31,14 @@ rounded-md" required>
  </div>
  <div>
  <x-input-label for="sale_date" value="Fecha de venta" />
- <x-text-input id="sale_date" name="sale_date" type="date" class="mt-1 block wfull"
+ <x-text-input id="sale_date" name="sale_date" type="date" class="mt-1 block w-full"
  :value="old('sale_date', now()->format('Y-m-d'))" required />
  </div>
  </div>
  <div>
  <x-input-label value="Productos" />
- <table class="min-w-full text-sm mt-2">
+ <div class="mt-2 overflow-x-auto">
+ <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
  <th class="p-2">Producto</th>
@@ -51,6 +52,7 @@ rounded-md" required>
  <!-- Filas dinámicas con JS -->
  </tbody>
  </table>
+ </div>
  <button type="button" id="add-item" class="mt-2 text-blue-700 underline">+ Agregar
 producto</button>
  </div>
@@ -83,7 +85,7 @@ producto</button>
  <template id="item-row-template">
  <tr class="border-b item-row">
  <td class="p-2">
- <select name="items[__INDEX__][product_id]" class="product-select w-full bordergray-300 rounded-md" required>
+ <select name="items[__INDEX__][product_id]" class="product-select w-full border-gray-300 rounded-md" required>
  <option value="">Seleccione</option>
  @foreach ($products as $product)
  <option value="{{ $product->id }}" data-price="{{ $product->precio ?? '' }}" data-stock="{{ $product->stock }}" @disabled($product->precio === null)>

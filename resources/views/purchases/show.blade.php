@@ -43,6 +43,7 @@
  <form method="POST" action="{{ route('purchases.receive', $purchase) }}">
  @csrf
  @method('PATCH')
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm border-t">
  <thead>
  <tr class="border-b text-left">
@@ -81,6 +82,7 @@ value="{{ old('items.'.$detail->id, $detail->pendingQuantity()) }}"
  @endforeach
  </tbody>
  </table>
+ </div>
  @if ($canReceive)
  <div class="flex flex-wrap items-end gap-4 mt-4 p-4 rounded bg-gray-50">
  <div>

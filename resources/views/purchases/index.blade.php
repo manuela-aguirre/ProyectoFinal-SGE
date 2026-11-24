@@ -24,7 +24,7 @@ $totalMonth, 2) }}</span>
  <span><strong>Órdenes por recibir:</strong> {{ $pendingCount }}</span>
  </div>
  </div>
- <form method="GET" action="{{ route('purchases.index') }}" class="flex flex-wrap gap2">
+ <form method="GET" action="{{ route('purchases.index') }}" class="flex flex-wrap gap-2">
  <input type="text" name="search" value="{{ request('search') }}" placeholder="Buscar
 por OC, factura o proveedor..." class="border-gray-300 rounded-md">
  <select name="status" class="border-gray-300 rounded-md">
@@ -40,6 +40,7 @@ rounded-md">
 rounded-md">
  <x-primary-button>Filtrar</x-primary-button>
  </form>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
@@ -69,7 +70,7 @@ $statusColors[$purchase->status] ?? '' }}">
  <td class="p-2 space-x-2">
  <a href="{{ route('purchases.show', $purchase) }}" class="text-blue-700
 underline">Ver</a>
- <a href="{{ route('purchases.pdf', $purchase) }}" target="_blank" class="textgray-700 underline">PDF</a>
+ <a href="{{ route('purchases.pdf', $purchase) }}" target="_blank" class="text-gray-700 underline">PDF</a>
  @can('eliminar-compras')
  @if ($purchase->canBeCancelled())
  <form method="POST" action="{{ route('purchases.destroy', $purchase)
@@ -90,6 +91,7 @@ mostrar.</td>
  @endforelse
  </tbody>
  </table>
+ </div>
  {{ $purchases->links() }}
  </div>
  </div>

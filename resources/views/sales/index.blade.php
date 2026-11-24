@@ -27,6 +27,7 @@ rounded-md">
 rounded-md">
  <x-primary-button>Filtrar</x-primary-button>
  </form>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
@@ -70,6 +71,7 @@ mostrar.</td>
  @endforelse
  </tbody>
  </table>
+ </div>
  {{ $sales->links() }}
  </div>
  </div>

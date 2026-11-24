@@ -41,6 +41,7 @@ required>
  @if (session('failures') && count(session('failures')) > 0)
  <div class="bg-white shadow rounded p-6">
  <h3 class="font-semibold text-red-700 mb-2">Filas omitidas por errores ({{ count(session('failures')) }})</h3>
+ <div class="overflow-x-auto">
  <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
@@ -59,6 +60,7 @@ required>
  @endforeach
  </tbody>
  </table>
+ </div>
  </div>
  @endif
  </div>

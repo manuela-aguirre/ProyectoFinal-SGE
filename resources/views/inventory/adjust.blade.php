@@ -4,7 +4,7 @@
  </x-slot>
  <div class="py-6">
  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
- <form method="POST" action="{{ route('inventory.adjust.store', $product) }}" class="bgwhite shadow rounded p-6 space-y-4">
+ <form method="POST" action="{{ route('inventory.adjust.store', $product) }}" class="bg-white shadow rounded p-6 space-y-4">
  @csrf
  <p class="text-sm text-gray-600">
  Un ajuste se hace después de un <strong>conteo físico</strong>: se digita la cantidad que realmente hay

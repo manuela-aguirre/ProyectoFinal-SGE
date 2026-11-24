@@ -58,5 +58,11 @@ class RolePermissionSeeder extends Seeder
             'ver-compras', 'crear-compras', 'recibir-compras',
             'ver-inventario', 'ajustar-inventario',
         ]);
+        Role::findOrCreate('contador')->syncPermissions([
+            'ver-productos', 'ver-clientes', 'ver-proveedores',
+            'ver-ventas', 'exportar-ventas',
+            'ver-compras', 'ver-inventario',
+            'ver-reportes', 'ver-auditoria',
+        ]);
     }
 }

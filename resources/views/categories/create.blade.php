@@ -4,7 +4,7 @@
  </x-slot>
  <div class="py-6">
  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
- <form method="POST" action="{{ route('categories.store') }}" class="bg-white shadow rounded p-6 space-y4">
+ <form method="POST" action="{{ route('categories.store') }}" class="bg-white shadow rounded p-6 space-y-4">
  @csrf
  @include('categories.partials.form')
  <div class="flex items-center gap-4">

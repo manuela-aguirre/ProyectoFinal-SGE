@@ -43,7 +43,8 @@ block w-full"
  </div>
  <div>
  <x-input-label value="Productos a comprar" />
- <table class="min-w-full text-sm mt-2">
+ <div class="mt-2 overflow-x-auto">
+ <table class="min-w-full text-sm">
  <thead>
  <tr class="border-b text-left">
  <th class="p-2">Producto</th>
@@ -57,6 +58,7 @@ block w-full"
  <!-- Filas dinámicas con JS -->
  </tbody>
  </table>
+ </div>
  <button type="button" id="add-item" class="mt-2 text-blue-700 underline">+ Agregar
 producto</button>
  </div>
@@ -89,7 +91,7 @@ producto</button>
  <template id="item-row-template">
  <tr class="border-b item-row">
  <td class="p-2">
- <select name="items[__INDEX__][product_id]" class="product-select w-full bordergray-300 rounded-md" required>
+ <select name="items[__INDEX__][product_id]" class="product-select w-full border-gray-300 rounded-md" required>
  <option value="">Seleccione</option>
  @foreach ($products as $product)
  <option value="{{ $product->id }}" data-price="{{ $product->precio }}">

@@ -81,6 +81,25 @@ $item['unit_price']);
         });
     }
 
+    public function cancel(Sale $sale): void
+    {
+        if ($sale->status === 'anulada') {
+            throw ValidationException::withMessages([
+                'sale' => "La venta {$sale->invoice_number} ya está anulada.",
+            ]);
+        }
+        DB::transaction(function () use ($sale) {
+            $sale->loadMissing('details.product');
+            foreach ($sale->details as $detail) {
+                if ($detail->product) {
+                    $this->inventory->entry($detail->product, $detail->quantity, 'anulacion_venta', $sale, (float) $detail->unit_price);
+                }
+            }
+            $sale->update(['status' => 'anulada']);
+            $sale->delete();
+        });
+    }
+
     /**
      * Genera el siguiente número de factura: FV-00001, FV-00002, ...
      */

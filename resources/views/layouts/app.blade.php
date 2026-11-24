@@ -12,12 +12,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwUEQp5WJb4JjY0pwW2B2Qz8KCA7vVqQxL5ZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @include('partials.crud-styles')
 
         <style>
             :root {
                 --cotec-green-900: #14532d;
-                --cotec-green-800: #166534;
-                --cotec-green-700: #15803d;
                 --cotec-green-50: #f0fdf4;
                 --cotec-green-100: #dcfce7;
                 --cotec-slate-900: #0f172a;
@@ -30,132 +29,49 @@
                 background: linear-gradient(180deg, #edf9f0 0%, #f8fafc 100%);
             }
 
+            .cotec-topbar {
+                position: sticky;
+                top: 0;
+                z-index: 40;
+                border-bottom: 1px solid var(--cotec-border);
+                background: rgba(255, 255, 255, 0.96);
+                box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+                backdrop-filter: blur(12px);
+            }
+
+            .cotec-topbar-inner {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.65rem 1.25rem;
+                max-width: 1500px;
+                margin: 0 auto;
+                padding: 0.7rem 1rem;
+            }
+
+            .cotec-primary-nav {
+                order: 3;
+                display: flex;
+                flex: 1 0 100%;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.2rem;
+                border-top: 1px solid #e2e8f0;
+                padding-top: 0.55rem;
+            }
+
+            .cotec-topbar-actions {
+                order: 2;
+                display: flex;
+                align-items: center;
+                gap: 0.65rem;
+                margin-left: auto;
+            }
+
             .cotec-shell {
                 max-width: 1500px;
                 margin: 0 auto;
-                padding: 1.25rem 1rem 2rem;
-            }
-
-            .cotec-layout {
-                display: grid;
-                grid-template-columns: 260px minmax(0, 1fr);
-                gap: 1.25rem;
-            }
-
-            .cotec-sidebar {
-                background: linear-gradient(180deg, #14532d 0%, #0f3f29 100%);
-                color: white;
-                border-radius: 1.25rem;
-                padding: 1.25rem 1rem;
-                box-shadow: 0 18px 35px rgba(20, 83, 45, 0.15);
-            }
-
-            .cotec-sidebar-header {
-                display: flex;
-                align-items: center;
-                gap: 0.8rem;
-                padding: 0.35rem 0.45rem 1rem;
-                border-bottom: 1px solid rgba(255,255,255,0.15);
-                margin-bottom: 1rem;
-            }
-
-            .cotec-sidebar-logo {
-                width: 54px;
-                height: 54px;
-                border-radius: 0;
-                background: transparent;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden;
-                flex-shrink: 0;
-            }
-
-            .cotec-sidebar-logo img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                display: block;
-            }
-
-            .cotec-sidebar-brand small {
-                display: block;
-                letter-spacing: 0.18em;
-                text-transform: uppercase;
-                font-size: 0.58rem;
-                opacity: 0.8;
-            }
-
-            .cotec-sidebar-brand strong {
-                display: block;
-                font-size: 0.95rem;
-                line-height: 1.2;
-            }
-
-            .cotec-section-label {
-                margin: 0.8rem 0 0.4rem;
-                padding: 0 0.4rem;
-                color: #d1fae5;
-                font-size: 0.68rem;
-                letter-spacing: 0.14em;
-                text-transform: uppercase;
-                font-weight: 700;
-            }
-
-            .cotec-section-toggle {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 0.6rem;
-                padding: 0.7rem 0.7rem;
-                border: 1px solid rgba(255,255,255,0.08);
-                border-radius: 0.8rem;
-                background: rgba(255,255,255,0.04);
-                color: #f0fdf4;
-                font-weight: 700;
-                letter-spacing: 0.02em;
-                text-transform: none;
-                text-align: left;
-                cursor: pointer;
-                transition: background 0.2s ease;
-            }
-
-            .cotec-section-toggle:hover {
-                background: rgba(255,255,255,0.08);
-            }
-
-            .cotec-nav-group {
-                display: grid;
-                gap: 0.4rem;
-            }
-
-            .cotec-side-link {
-                display: flex;
-                align-items: center;
-                gap: 0.8rem;
-                width: 100%;
-                border: 1px solid transparent;
-                background: rgba(255,255,255,0.04);
-                color: rgba(255,255,255,0.96);
-                text-decoration: none;
-                padding: 0.8rem 0.8rem;
-                border-radius: 0.8rem;
-                transition: all 0.2s ease;
-                font-weight: 600;
-            }
-
-            .cotec-side-link:hover,
-            .cotec-side-link.active {
-                background: rgba(255,255,255,0.1);
-                border-color: rgba(255,255,255,0.14);
-                transform: translateX(2px);
-            }
-
-            .cotec-side-link i {
-                width: 1.1rem;
-                text-align: center;
-                opacity: 0.95;
+                padding: 1.5rem 1rem 2rem;
             }
 
             .cotec-content {
@@ -190,109 +106,54 @@
                 flex-wrap: wrap;
             }
 
-            .cotec-footer-brand {
-                display: flex;
-                align-items: center;
-                gap: 0.7rem;
-            }
-
-            .cotec-footer-brand img {
-                width: 36px;
-                height: 36px;
-                border-radius: 50%;
-                object-fit: contain;
-                background: white;
-            }
-
-            @media (max-width: 1024px) {
-                .cotec-layout {
-                    grid-template-columns: 1fr;
+            @media (min-width: 1024px) {
+                .cotec-primary-nav {
+                    order: 2;
+                    flex: 1 1 0;
+                    border-top: 0;
+                    padding-top: 0;
                 }
 
-                .cotec-sidebar {
-                    order: 2;
+                .cotec-topbar-actions {
+                    order: 3;
                 }
             }
         </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-[#edf8f1] text-slate-800">
+        <div class="min-h-screen text-slate-800">
             @include('layouts.navigation')
 
             <div class="cotec-shell">
-                <div class="cotec-layout">
-                    <aside class="cotec-sidebar" x-data="{ openOperaciones: true, openConfiguracion: false, openReportes: false }">
-                        <div class="cotec-section-label">
-                            <button type="button" @click="openOperaciones = !openOperaciones" class="cotec-section-toggle">
-                                <span>Operaciones</span>
-                                <i class="fa-solid" :class="openOperaciones ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                            </button>
-                        </div>
-                       <nav x-show="openOperaciones" x-transition class="cotec-nav-group">
-    <a href="{{ route('dashboard') }}" class="cotec-side-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
-    <a href="{{ route('products.index') }}" class="cotec-side-link {{ request()->routeIs('products.*') ? 'active' : '' }}"><i class="fa-solid fa-boxes-stacked"></i> Productos</a>
-    <a href="{{ route('providers.index') }}" class="cotec-side-link {{ request()->routeIs('proveedores.*') ? 'active' : '' }}"><i class="fa-solid fa-truck-field"></i> Proveedores</a>
-    <a href="{{ route('sales.index') }}" class="cotec-side-link {{ request()->routeIs('sales.*') ? 'active' : '' }}"><i class="fa-solid fa-cash-register"></i> Ventas</a>
-    <a href="{{ route('purchases.index') }}" class="cotec-side-link {{ request()->routeIs('compras.*') ? 'active' : '' }}"><i class="fa-solid fa-cart-shopping"></i> Compras</a>
-    <a href="{{ route('profile.edit') }}" class="cotec-side-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}"><i class="fa-solid fa-user-group"></i> Usuarios</a>
-</nav>
+                <div class="cotec-content">
+                    @isset($header)
+                        <header class="cotec-panel bg-white shadow-sm">
+                            <div class="max-w-7xl mx-auto py-5 px-5 sm:px-6 lg:px-8">
+                                {{ $header }}
+                            </div>
+                        </header>
+                    @endisset
 
-                        <div class="cotec-section-label">
-                            <button type="button" @click="openConfiguracion = !openConfiguracion" class="cotec-section-toggle">
-                                <span>Configuración</span>
-                                <i class="fa-solid" :class="openConfiguracion ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                            </button>
-                        </div>
-                        <nav x-show="openConfiguracion" x-transition class="cotec-nav-group">
-                            <a href="#" class="cotec-side-link"><i class="fa-solid fa-gear"></i> Parámetros</a>
-                            @can('ver-categorias')
-                                <a href="{{ route('categories.index') }}" class="cotec-side-link {{ request()->routeIs('categories.*') ? 'active' : '' }}"><i class="fa-solid fa-tags"></i> Categorías</a>
-                            @endcan
-                            <a href="{{ route('profile.edit') }}" class="cotec-side-link"><i class="fa-solid fa-user"></i> Perfil</a>
-                        </nav>
-
-                        <div class="cotec-section-label">
-                            <button type="button" @click="openReportes = !openReportes" class="cotec-section-toggle">
-                                <span>Reportes</span>
-                                <i class="fa-solid" :class="openReportes ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                            </button>
-                        </div>
-                        <nav x-show="openReportes" x-transition class="cotec-nav-group">
-                            <a href="#" class="cotec-side-link"><i class="fa-solid fa-chart-column"></i> Indicadores</a>
-                            <a href="#" class="cotec-side-link"><i class="fa-solid fa-file-invoice-dollar"></i> Cartera</a>
-                        </nav>
-                    </aside>
-
-                    <div class="cotec-content">
-                        @isset($header)
-                            <header class="cotec-panel bg-white shadow-sm">
-                                <div class="max-w-7xl mx-auto py-5 px-5 sm:px-6 lg:px-8">
-                                    {{ $header }}
-                                </div>
-                            </header>
-                        @endisset
-
-                        <main class="cotec-main">
-                            {{ $slot }}
-                        </main>
-                    </div>
+                    <main class="cotec-main">
+                        {{ $slot }}
+                    </main>
                 </div>
             </div>
 
             <footer class="cotec-footer">
                 <div class="cotec-footer-inner">
                     <div>
-                        <div style="font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;opacity:0.7;margin-bottom:0.5rem;">Sistema</div>
+                        <div class="mb-2 text-[0.7rem] uppercase tracking-[0.16em] opacity-70">Sistema</div>
                         <div>Versión 2.4.0</div>
                     </div>
 
                     <div>
-                        <div style="font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;opacity:0.7;margin-bottom:0.5rem;">Contacto</div>
+                        <div class="mb-2 text-[0.7rem] uppercase tracking-[0.16em] opacity-70">Contacto</div>
                         <div>ventas@lyra.com</div>
                     </div>
 
                     <div>
-                        <div style="font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;opacity:0.7;margin-bottom:0.5rem;">© {{ date('Y') }}</div>
+                        <div class="mb-2 text-[0.7rem] uppercase tracking-[0.16em] opacity-70">© {{ date('Y') }}</div>
                         <div>Todos los derechos reservados</div>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ block w-full"
 </div>
 <div>
  <x-input-label for="contact_name" value="Persona de contacto (opcional)" />
- <x-text-input id="contact_name" name="contact_name" type="text" class="mt-1 block wfull"
+ <x-text-input id="contact_name" name="contact_name" type="text" class="mt-1 block w-full"
  :value="old('contact_name', $provider->contact_name)" />
  <x-input-error class="mt-2" :messages="$errors->get('contact_name')" />
 </div>
